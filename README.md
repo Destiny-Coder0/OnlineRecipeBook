@@ -35,4 +35,5 @@ JavaScript
 
 -Course Context-
 This project was completed for the Scripting Language course in the Management Information Systems / Istanbul Aydın University, Spring Semester-2025. It serves as both a demonstration of what I’ve learned and a foundation for future web development projects.
+
 ![image](https://github.com/user-attachments/assets/2d52592d-cfc9-41d3-ae1a-791750bd9a7a)
