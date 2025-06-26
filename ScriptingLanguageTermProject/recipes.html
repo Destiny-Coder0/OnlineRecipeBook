@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipes - Online Recipe Book</title>
+  <style>
+    body {
+      background-color: #fff8ec;
+    }
+
+    #container {
+      width: 1000px;
+      margin: auto;
+      background-color: rgb(255, 250, 240);
+      border-radius: 7px;
+      overflow: auto;
+      font-family: calibri;
+    }
+
+    #navbar {
+      width: 100%;
+      background-color: #292929;
+      padding: 3px 0;
+    }
+
+    #menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #menu li a {
+      display: block;
+      width: 100px;
+      height: 40px;
+      background-color: #e67e22;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+      margin-right: 8px;
+      border-radius: 5px;
+      transition: 0.5s;
+      margin: 20px;
+    }
+
+    #menu li a:hover {
+      background-color: #ff9800;
+      color: #fff5e6;
+    }
+
+    #banner {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #banner img {
+      width: 100%;
+      height: 400px;
+      display: block;
+    }
+
+    #bannerContent {
+      margin-top: 50px;
+      position: absolute;
+      top: 100px;
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+
+    #bannerContent h1 {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    #bannerContent p {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    #darkMode {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      padding: 8px 15px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #darkMode:hover {
+      background-color: #ff9800;
+    }
+
+    h2 {
+      text-align: center;
+      color: #292929;
+      margin-top: 40px;
+    }
+
+    button {
+      background-color: #e67e22;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px auto;
+      display: block;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #ff9800;
+    }
+
+    .recipeCard {
+      background-color: #fff3e0;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px auto;
+      width: 80%;
+      color: #292929;
+    }
+
+    .recipeCard h3 {
+      color: #e67e22;
+      margin-top: 0;
+    }
+
+    .recipeCard img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    #recipeList {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    #footer {
+      height: 50px;
+      background-color: #e67e22;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 14px;
+      border-radius: 0 0 7px 7px;
+    }
+  </style>
+
+  <script>
+    const recipes = [
+      {
+        name: "Lentil Soup",
+        category: "Soup",
+        time: "30 mins",
+        ingredients: "Lentils, Onion, Carrot, Olive Oil",
+        image: "Images/lentilSoup.jpg"
+      },
+      {
+        name: "Chocolate Cake",
+        category: "Dessert",
+        time: "1 hour",
+        ingredients: "Flour, Eggs, Cocoa, Sugar, Butter",
+        image: "Images/chocolateCake.jpg"
+      },
+      {
+        name: "Caesar Salad",
+        category: "Salad",
+        time: "15 mins",
+        ingredients: "Lettuce, Croutons, Cheese, Caesar dressing",
+        image: "Images/caesarSalad.jpg"
+      },
+      {
+        name: "Tomato Basil Soup",
+        category: "Soup",
+        time: "25 mins",
+        ingredients: "Tomatoes, Basil, Garlic, Cream, Onion",
+        image: "Images/tomatoSoup.jpg"
+      },
+      {
+        name: "Fruit Tart",
+        category: "Dessert",
+        time: "45 mins",
+        ingredients: "Pastry Crust, Custard, Strawberries, Kiwi, Blueberries",
+        image: "Images/fruitTart.jpg"
+      },
+      {
+        name: "Greek Salad",
+        category: "Salad",
+        time: "10 mins",
+        ingredients: "Tomatoes, Cucumber, Feta Cheese, Olives, Onion",
+        image: "Images/greekSalad.jpg"
+      },
+      {
+        name: "Pasta Alfredo",
+        category: "Main",
+        time: "20 mins",
+        ingredients: "Pasta, Cream, Butter, Parmesan, Garlic",
+        image: "Images/pastaAlfredo.jpg"
+      },
+      {
+        name: "Chicken Curry",
+        category: "Main",
+        time: "40 mins",
+        ingredients: "Chicken, Curry powder, Tomatoes, Yogurt, Spices",
+        image: "Images/chickenCurry.jpg"
+      },
+      {
+        name: "Brownies",
+        category: "Dessert",
+        time: "35 mins",
+        ingredients: "Chocolate, Butter, Sugar, Flour, Eggs",
+        image: "Images/brownies.jpg"
+      }
+    ];
+
+    let isDark = false;
+
+    function showRecipes() {
+      const container = document.getElementById("recipeList");
+      const selected = document.getElementById("categorySelect").value;
+      container.innerHTML = "";
+
+      let filtered = [];
+
+      if (selected === "All") {
+        filtered = recipes;
+      } else {
+        for (let i = 0; i < recipes.length; i++) {
+          if (recipes[i].category === selected) {
+            filtered.push(recipes[i]);
+          }
+        }
+      }
+
+      for (let i = 0; i < filtered.length; i++) {
+        const r = filtered[i];
+        let card = document.createElement("div");
+        card.className = "recipeCard";
+
+        card.innerHTML = 
+          "<img src='" + r.image + "' alt='" + r.name + "'>" +
+          "<h3>" + r.name + "</h3>" +
+          "<p><strong>Category:</strong> " + r.category + "</p>" +
+          "<p><strong>Time:</strong> " + r.time + "</p>" +
+          "<p><strong>Ingredients:</strong> " + r.ingredients + "</p>";
+
+          if (isDark === true) {
+            card.style.backgroundColor = "#3c3c3c";
+            card.style.color = "#f0f0f0";
+          } else {
+            card.style.backgroundColor = "#fff3e0";
+            card.style.color = "#292929";
+          }
+
+        container.appendChild(card);
+      }
+    }
+
+    function toggleTheme() {
+    const body = document.body;
+    const container = document.getElementById("container");
+    const navbar = document.getElementById("navbar");
+    const bannerContent = document.getElementById("bannerContent");
+    const toggleBtn = document.getElementById("darkMode");
+    const cards = document.getElementsByClassName("recipeCard");
+    const heading = document.querySelector("h2");
+    const footer = document.getElementById("footer");
+
+    if (isDark === false) {
+      body.style.backgroundColor = "#1c1c1c";
+      container.style.backgroundColor = "#2c2c2c";
+      navbar.style.backgroundColor = "#111";
+      bannerContent.style.color = "white";
+      heading.style.color = "#f5f5f5";
+      toggleBtn.innerText = "☀️ Light Mode";
+      footer.style.backgroundColor = "#111";
+      footer.style.color = "#f5f5f5";
+
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].style.backgroundColor = "#3c3c3c";
+        cards[i].style.color = "#f0f0f0";
+      }
+
+      isDark = true;
+    } else {
+      body.style.backgroundColor = "#fff8ec";
+      container.style.backgroundColor = "rgb(255, 250, 240)";
+      navbar.style.backgroundColor = "#292929";
+      bannerContent.style.color = "white";
+      heading.style.color = "#292929";
+      toggleBtn.innerText = "🌙 Dark Mode";
+      footer.style.backgroundColor = "#e67e22";
+      footer.style.color = "white";
+
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].style.backgroundColor = "#fff3e0";
+        cards[i].style.color = "#292929";
+      }
+
+      isDark = false;
+    }
+  }
+
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="banner">
+      <img src="Images/Banner1.jpg" alt="Recipe Banner">
+      <div id="bannerContent">
+        <h1>Online Recipe Book</h1>
+        <p>Explore Our Recipes</p>
+        <button id="darkMode" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+    </div>
+
+    <div id="navbar">
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="submit.html">Submit</a></li>
+        <li><a href="table.html">Table</a></li>
+        <li><a href="specials.html">Specials</a></li>
+      </ul>
+    </div>
+
+    <h2>Our Recipes</h2>
+    <div style="text-align: center; margin-bottom: 10px;">
+      <label for="categorySelect"><strong>Filter by category:</strong></label>
+      <select id="categorySelect">
+        <option value="All">All</option>
+        <option value="Soup">Soup</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Salad">Salad</option>
+        <option value="Main">Main</option>
+      </select>
+    </div>
+
+    <button onclick="showRecipes()">Show Recipes</button>
+    <div id="recipeList"></div>
+
+    <div id="footer">
+      <p>&copy; 2025 Dilara Meriç - Online Recipe Book Project</p>
+    </div>
+  </div>
+</body>
+</html>

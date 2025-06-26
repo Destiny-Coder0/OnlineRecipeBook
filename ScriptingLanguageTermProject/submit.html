@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Recipe - Online Recipe Book</title>
+  <style>
+    body {
+      background-color: #fff8ec;
+      font-family: calibri;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      width: 1000px;
+      margin: auto;
+      background-color: rgb(255, 250, 240);
+      border-radius: 7px;
+      overflow: auto;
+      padding-bottom: 30px;
+    }
+
+    #navbar {
+      width: 100%;
+      background-color: #292929;
+      padding: 10px 0;
+    }
+
+    #menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #menu li a {
+      display: block;
+      width: 100px;
+      height: 40px;
+      background-color: #e67e22;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+      margin: 10px;
+      border-radius: 5px;
+      transition: 0.5s;
+    }
+
+    #menu li a:hover {
+      background-color: #ff9800;
+      color: #fff5e6;
+    }
+
+    #banner {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #banner img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      border-radius: 7px 7px 0 0;
+    }
+
+    #bannerContent {
+      position: absolute;
+      top: 100px;
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+
+    #darkMode {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      padding: 8px 15px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e67e22;
+      margin-top: 30px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background-color: #fff3e0;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 95%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      background-color: #e67e22;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    #recipeArea {
+      display: flex;
+      max-width: 950px;
+      margin: 30px auto 0;
+      gap: 20px;
+    }
+
+    #recipeList {
+      width: 40%;
+      border-radius: 10px;
+      background-color: #fff3e0;
+    }
+
+    #recipeList ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    #recipeList li {
+      padding: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #recipeList li span {
+      flex-grow: 1;
+    }
+
+    .deleteBtn {
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    #recipeDetails {
+      width: 55%;
+      background-color: #fff3e0;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    #footer {
+      height: 50px;
+      background-color: #e67e22;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 14px;
+      border-radius: 0 0 7px 7px;
+    }
+  </style>
+
+  <script>
+    const recipes = [];
+    let isDark = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const container = document.getElementById("container");
+      const navbar = document.getElementById("navbar");
+      const form = document.querySelector("form");
+      const list = document.getElementById("recipeList");
+      const detail = document.getElementById("recipeDetails");
+      const footer = document.getElementById("footer");
+      const bannerText = document.getElementById("bannerContent");
+      const button = document.getElementById("darkMode");
+
+      if (isDark === false) {
+        body.style.backgroundColor = "#1c1c1c";
+        body.style.color = "#f5f5f5";
+        container.style.backgroundColor = "#2c2c2c";
+        navbar.style.backgroundColor = "#111";
+        form.style.backgroundColor = "#3a3a3a";
+        form.style.color = "#f5f5f5";
+        list.style.backgroundColor = "#3a3a3a";
+        detail.style.backgroundColor = "#3a3a3a";
+        detail.style.color = "#f5f5f5";
+        footer.style.backgroundColor = "#111";
+        footer.style.color = "#f5f5f5";
+        bannerText.style.color = "#ffffff";
+        button.innerText = "☀️ Light Mode";
+        isDark = true;
+      } else {
+        body.style.backgroundColor = "#fff8ec";
+        body.style.color = "#2c2c2c";
+        container.style.backgroundColor = "rgb(255, 250, 240)";
+        navbar.style.backgroundColor = "#292929";
+        form.style.backgroundColor = "#fff3e0";
+        form.style.color = "#292929";
+        list.style.backgroundColor = "#fff3e0";
+        detail.style.backgroundColor = "#fff3e0";
+        detail.style.color = "#292929";
+        footer.style.backgroundColor = "#e67e22";
+        footer.style.color = "white";
+        bannerText.style.color = "white";
+        button.innerText = "🌙 Dark Mode";
+        isDark = false;
+      }
+
+      updateRecipeList();
+    }
+
+    function validateForm(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("recipeName").value;
+      const category = document.getElementById("category").value;
+      const time = document.getElementById("time").value;
+      const ingredients = document.getElementById("ingredients").value;
+      const image = document.getElementById("image").value;
+
+      const errorDiv = document.getElementById("errorMsg");
+      const successDiv = document.getElementById("successMsg");
+      errorDiv.innerHTML = "";
+      successDiv.innerHTML = "";
+
+      if (name == "" || category == "" || time == "" || ingredients == "") {
+        alert("Please fill in all required fields before submitting!");
+        errorDiv.innerHTML = "Please fill in all required fields.";
+        return;
+      }
+
+      if (parseInt(time) < 0 || parseInt(time) > 240) {
+        alert("Cooking time must be between 0 and 240 minutes.");
+        errorDiv.innerHTML = "Cooking time must be between 1 and 240 minutes.";
+        return;
+      }
+
+      if (image != "" && image.indexOf("http") != 0 && image.indexOf("https") != 0) {
+        errorDiv.innerHTML = "Image link must start with http or https.";
+        return;
+      }
+
+      const recipe = {
+        name: name,
+        category: category,
+        time: time,
+        ingredients: ingredients,
+        image: image
+      };
+
+      recipes.push(recipe);
+      updateRecipeList();
+      alert("Recipe submitted successfully!");
+      successDiv.innerHTML = "Recipe submitted successfully!";
+      document.getElementById("recipeForm").reset();
+    }
+
+    function upperCaseName() {
+      const nameField = document.getElementById("recipeName");
+      nameField.value = nameField.value.toUpperCase();
+    }
+
+    function updateRecipeList() {
+      const list = document.getElementById("recipeListList");
+      list.innerHTML = "";
+
+      for (let i = 0; i < recipes.length; i++) {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        span.innerText = recipes[i].name;
+        span.onclick = function () {
+          showDetails(i);
+        };
+
+        const del = document.createElement("button");
+        del.innerText = "Delete";
+        del.className = "deleteBtn";
+        del.onclick = function () {
+          recipes.splice(i, 1);
+          updateRecipeList();
+          document.getElementById("recipeDetails").innerHTML = "";
+        };
+
+        if (isDark === true) {
+          li.style.backgroundColor = "#2a2a2a";
+          li.style.color = "#ffffff";
+        } else {
+          li.style.backgroundColor = "#ffe0b2";
+          li.style.color = "#000000";
+        }
+
+        li.appendChild(span);
+        li.appendChild(del);
+        list.appendChild(li);
+      }
+    }
+
+    function showDetails(i) {
+      const detailDiv = document.getElementById("recipeDetails");
+      const r = recipes[i];
+
+      let content = "<h3>Details</h3>";
+      content += "<p><strong>Name:</strong> " + r.name + "</p>";
+      content += "<p><strong>Category:</strong> " + r.category + "</p>";
+      content += "<p><strong>Time:</strong> " + r.time + "</p>";
+      content += "<p><strong>Ingredients:</strong> " + r.ingredients + "</p>";
+
+      if (r.image != "") {
+        content += '<img src="' + r.image + '" alt="' + r.name + '" style="max-width:100%; margin-top:10px;">';
+      }
+
+      detailDiv.innerHTML = content;
+    }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="banner">
+      <img src="Images/Banner1.jpg" alt="Banner Image">
+      <div id="bannerContent">
+        <h1>Online Recipe Book</h1>
+        <p>Submit Your Own Recipe</p>
+        <button id="darkMode" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+    </div>
+
+    <div id="navbar">
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="submit.html">Submit</a></li>
+        <li><a href="table.html">Table</a></li>
+        <li><a href="specials.html">Specials</a></li>
+      </ul>
+    </div>
+
+    <h2>Submit a New Recipe</h2>
+
+    <form id="recipeForm" onsubmit="validateForm(event)">
+      <label for="recipeName">Recipe Name</label>
+      <input type="text" id="recipeName" onblur="upperCaseName()" required>
+
+      <label for="category">Category</label>
+      <select id="category">
+        <option value="">Select...</option>
+        <option value="Soup">Soup</option>
+        <option value="Salad">Salad</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Main">Main</option>
+      </select>
+
+      <label for="time">Cooking Time (Minute)</label>
+      <input type="number" id="time" min="0" max="360">
+
+      <label for="ingredients">Ingredients</label>
+      <textarea id="ingredients" rows="4"></textarea>
+
+      <label for="image">Image Link (optional)</label>
+      <input type="text" id="image">
+
+      <div id="errorMsg" class="error"></div>
+      <div id="successMsg" class="success"></div>
+
+      <div class="form-buttons">
+        <button type="submit">Submit Recipe</button>
+        <button type="reset">Reset Form</button>
+      </div>
+    </form>
+
+    <div id="recipeArea">
+      <div id="recipeList">
+        <h3 style="text-align:center; color:#e67e22;">Recipe List</h3>
+        <ul id="recipeListList"></ul>
+      </div>
+
+      <div id="recipeDetails">
+        <h3>Details</h3>
+        <p>Select a recipe to see details here.</p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>&copy; 2025 Dilara Meriç - Online Recipe Book Project</p>
+    </div>
+  </div>
+</body>
+</html>

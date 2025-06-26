@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Table - Online Recipe Book</title>
+  <style>
+    body {
+      background-color: #fff8ec;
+      font-family: calibri;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      width: 1000px;
+      margin: auto;
+      background-color: rgb(255, 250, 240);
+      border-radius: 7px;
+      overflow: auto;
+      padding-bottom: 30px;
+    }
+
+    #navbar {
+      width: 100%;
+      background-color: #292929;
+      padding: 10px 0;
+    }
+
+    #menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #menu li a {
+      display: block;
+      width: 100px;
+      height: 40px;
+      background-color: #e67e22;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+      margin: 10px;
+      border-radius: 5px;
+      transition: 0.5s;
+    }
+
+    #menu li a:hover {
+      background-color: #ff9800;
+      color: #fff5e6;
+    }
+
+    #banner {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #banner img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      border-radius: 7px 7px 0 0;
+    }
+
+    #bannerContent {
+      position: absolute;
+      top: 100px;
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+
+    #bannerContent h1 {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    #bannerContent p {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    #darkMode {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      padding: 8px 15px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #darkMode:hover {
+      background-color: #ff9800;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e67e22;
+      margin-top: 30px;
+    }
+
+    #today {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+      color: #292929;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    th {
+      background-color: #e67e22;
+      color: white;
+      padding: 10px;
+    }
+
+    td {
+
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    tr:hover {
+      background-color: #ffedcc;
+    }
+
+    #filter {
+      display: block;
+      width: 200px;
+      margin: 10px auto;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-weight: bold;
+    }
+
+    #footer {
+      height: 50px;
+      background-color: #e67e22;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 14px;
+      border-radius: 0 0 7px 7px;
+    }
+  </style>
+
+  <script>
+
+    let isDark = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const container = document.getElementById("container");
+      const navbar = document.getElementById("navbar");
+      const footer = document.getElementById("footer");
+      const table = document.querySelector("table");
+      const header = document.getElementById("bannerContent");
+      const today = document.getElementById("today");
+      const filter = document.getElementById("filter");
+      const button = document.getElementById("darkMode");
+
+      if (!isDark) {
+        body.style.backgroundColor = "#1c1c1c";
+        body.style.color = "#f5f5f5";
+        container.style.backgroundColor = "#2c2c2c";
+        navbar.style.backgroundColor = "#111";
+        footer.style.backgroundColor = "#111";
+        table.style.backgroundColor = "#3c3c3c";
+        today.style.color = "#f5f5f5";
+        filter.style.backgroundColor = "#3c3c3c";
+        filter.style.color = "#f5f5f5";
+        header.style.color = "#ffffff";
+        button.innerText = "☀️ Light Mode";
+        isDark = true;
+      } else {
+        body.style.backgroundColor = "#fff8ec";
+        body.style.color = "#292929";
+        container.style.backgroundColor = "rgb(255, 250, 240)";
+        navbar.style.backgroundColor = "#292929";
+        footer.style.backgroundColor = "#e67e22";
+        table.style.backgroundColor = "white";
+        today.style.color = "#292929";
+        filter.style.backgroundColor = "white";
+        filter.style.color = "#292929";
+        header.style.color = "white";
+        button.innerText = "🌙 Dark Mode";
+        isDark = false;
+      }
+    }
+    const recipes = [
+      { name: "Lentil Soup", category: "Soup", time: "30 mins" },
+      { name: "Chocolate Cake", category: "Dessert", time: "1 hour" },
+      { name: "Caesar Salad", category: "Salad", time: "15 mins" },
+      { name: "Tomato Basil Soup", category: "Soup", time: "25 mins" },
+      { name: "Fruit Tart", category: "Dessert", time: "45 mins" },
+      { name: "Greek Salad", category: "Salad", time: "10 mins" },
+      { name: "Pasta Alfredo", category: "Main", time: "20 mins" },
+      { name: "Chicken Curry", category: "Main", time: "40 mins" },
+      { name: "Brownies", category: "Dessert", time: "35 mins" }
+    ];
+
+    function loadTable() {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+
+      for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
+        const row = document.createElement("tr");
+
+        if (recipe.category === "Dessert") {
+          row.style.backgroundColor = "#ede7f6";
+        } else if (recipe.category === "Soup") {
+          row.style.backgroundColor = "#e0f7fa";
+        } else if (recipe.category === "Salad") {
+          row.style.backgroundColor = "#f1f8e9";
+        } else if (recipe.category === "Main") {
+          row.style.backgroundColor = "#fbe9e7";
+        }
+
+        // 👇 Bu satır ekleniyor: yazı rengi hep siyah
+        row.style.color = "#000";
+
+        const nameCell = document.createElement("td");
+        const catCell = document.createElement("td");
+        const timeCell = document.createElement("td");
+
+        nameCell.innerText = recipe.name;
+        catCell.innerText = recipe.category;
+        timeCell.innerText = recipe.time;
+
+        row.appendChild(nameCell);
+        row.appendChild(catCell);
+        row.appendChild(timeCell);
+        tbody.appendChild(row);
+      }
+    }
+
+    function filterTable() {
+      const selected = document.getElementById("filter").value;
+      const rows = document.querySelectorAll("tbody tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        const category = rows[i].getElementsByTagName("td")[1].innerText;
+
+        if (selected == "All" || category == selected) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+
+    window.onload = function () {
+      const date = new Date();
+      document.getElementById("today").innerText = "Today is: " + date.toDateString();
+      loadTable();
+    };
+  </script>
+</head>
+<body>
+
+  <div id="container">
+
+    <div id="banner">
+      <img src="Images/Banner1.jpg" alt="Banner Image">
+      <div id="bannerContent">
+        <h1>Online Recipe Book</h1>
+        <p>Recipe Categories Table</p>
+        <button id="darkMode" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+    </div>
+
+    <div id="navbar">
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="submit.html">Submit</a></li>
+        <li><a href="table.html">Table</a></li>
+        <li><a href="specials.html">Specials</a></li>
+      </ul>
+    </div>
+
+    <h2>Categorized Recipe Table</h2>
+    <p id="today"></p>
+
+    <select id="filter" onchange="filterTable()">
+      <option value="All">Show All</option>
+      <option value="Soup">Soup</option>
+      <option value="Salad">Salad</option>
+      <option value="Dessert">Dessert</option>
+      <option value="Main">Main</option>
+    </select>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Recipe Name</th>
+          <th>Category</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+
+    <div id="footer">
+      <p>&copy; 2025 Dilara Meriç - Online Recipe Book Project</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

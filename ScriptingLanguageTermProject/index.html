@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Recipe Book - Dilara Meriç</title>
+
+  <style>
+    
+    body {
+      background-color: 	#fff8ec;
+    }
+
+    #container {
+      width: 1000px;
+      margin: auto;
+      background-color: rgb(255, 250, 240);
+      border-radius: 7px;
+      overflow: auto;
+      font-family: calibri;
+    }
+
+    #navbar {
+      width: 100%;
+      background-color:#292929;
+      padding: 3px 0;
+    }
+
+    #menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #menu li a {
+      display: block;
+      width: 100px;
+      height: 40px;
+      background-color: #e67e22;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+      margin-right: 8px;
+      border-radius: 5px;
+      transition: 0.5s;
+      margin:20px;
+    }
+
+    #menu li a:hover {
+      background-color: #ff9800;
+      color:	#fff5e6;
+    }
+
+    #banner {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;  
+      align-items: center;
+    }
+
+    #banner img {
+      width: 100%;
+      height: 400px;
+      display: block;
+    }
+
+    #bannerContent {
+      margin-top:50px;
+      position: absolute;
+      top: 100px;
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+
+    #bannerContent h1 {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    #bannerContent p {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    #darkMode {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      padding: 8px 15px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    #darkMode:hover {
+      background-color: #ff9800;
+    }
+
+
+    .projectInfo {
+      background-image: linear-gradient(to right, #ffe0b2, #fff8e1);
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .projectInfo img {
+      float: left;
+      margin-right: 20px;
+      margin-top: 20px;
+    }
+
+    .projectContent {
+      padding: 10px;
+      margin: 20px 0;
+      border: 2px solid #e67e22;
+    }
+
+    .projectInfo2 {
+      margin-left: 20px;
+    }
+
+    .projectInfo2 img {
+      float: right;
+      margin-right: 30px;
+      border-radius: 50%;
+    }
+
+    #quote {
+    text-align: center;
+    font-size: 20px;
+    color: #555;
+    margin: 40px 20px;
+  }
+
+    #footer {
+      height: 50px;
+      background-color: #e67e22;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 14px;
+      border-radius: 0 0 7px 7px;
+    }
+
+  </style>
+
+  <script>
+    function showGreeting() {
+      const hour = new Date().getHours();
+      let greeting = "Welcome, Chef!";
+
+      if (hour < 12) greeting = "Good Morning, Chef!";
+      else if (hour < 18) greeting = "Good Afternoon, Chef!";
+      else greeting = "Good Evening, Chef!";
+
+      document.getElementById("greeting").innerHTML = greeting;
+    }
+
+    let isDark = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const container = document.getElementById("container");
+      const navbar = document.getElementById("navbar");
+      const footer = document.getElementById("footer");
+      const toggleBtn = document.getElementById("darkMode");
+      const projectInfo = document.querySelector(".projectInfo");
+
+      if (!isDark) {
+        body.style.backgroundColor = "#1c1c1c";
+        body.style.color = "#f5f5f5";
+        container.style.backgroundColor = "#2c2c2c";
+        navbar.style.backgroundColor = "#111";
+        footer.style.backgroundColor = "#111";
+        projectInfo.style.background = "#3a3a3a";
+        toggleBtn.innerText = "☀️ Light Mode";
+        isDark = true;
+      } 
+      else {
+        body.style.backgroundColor = "#fff8ec";
+        body.style.color = "#2c2c2c";
+        container.style.backgroundColor = "rgb(255, 250, 240)";
+        navbar.style.backgroundColor = "#292929";
+        footer.style.backgroundColor = "#e67e22";
+        projectInfo.style.background = "linear-gradient(to right, #ffe0b2, #fff8e1)";
+        toggleBtn.innerText = "🌙 Dark Mode";
+        isDark = false;
+      }
+    }
+
+
+  </script>
+</head>
+<body onload="showGreeting()">
+  <div id="container">
+
+    <div id="banner">
+      <img src="Images/Banner1.jpg" alt="Recipe Banner">
+      <div id="bannerContent">
+        <h1>Online Recipe Book</h1>
+        <p>Your Gateway to Culinary Delights!</p>
+        <button id="darkMode" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+    </div>
+
+    <div id="navbar">
+          <ul id="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="submit.html">Submit</a></li>
+            <li><a href="table.html">Table</a></li>
+            <li><a href="specials.html">Specials</a></li>
+          </ul>
+      </div>
+
+    <div class="content">
+      <div class="projectInfo">
+        <img src="Images/RecipeBook.jpg" width="270" height="180" alt="Recipe Book Image">
+        <h2>About the Project</h2>
+        <p id="greeting"></p>
+        <p>This website is designed as an online recipe book system. It allows users to browse various recipes, submit their own, explore categorized recipe data and let them have fun. The project includes <strong>five pages:</strong> a homepage, a recipe list, a submission form, a categorized recipe table, and a surprise page.</p>
+        <p>The system is designed for cooking lovers and aims to be dynamic, interactive, and user-friendly using JavaScript.</p>
+      </div>
+
+      <div class="projectContent">
+        <div class="projectInfo2">
+          <img src="Images/DilaraMericPicture.jpg" width="160" height="170" alt="Dilara Meriç Photo">
+          <p><strong>Student Name:</strong> Dilara MERİÇ</p>
+          <p><strong>Student Number:</strong> B2380.011018</p>
+          <p><strong>Department:</strong> Management Information Systems</p>
+          <p><strong>Course Name and Code:</strong> Scripting Language - UMI222</p>
+          <p><strong>Instructor Name:</strong> Assoc. Prof. Dr Ilham HUSEYINOV</p>
+        </div>
+      </div>
+    </div>
+
+    <p id="quote"><em>“A recipe has no soul. You as the cook must bring soul to the recipe.” <br>- Thomas Keller</em></p>
+
+    <div id="footer">
+      <p>&copy; 2025 Dilara Meriç - Online Recipe Book Project</p>
+    </div>
+  </div>
+</body>
+</html>
