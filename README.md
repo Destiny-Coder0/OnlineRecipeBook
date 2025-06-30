@@ -1,7 +1,7 @@
 # ScriptingLanguage
 This repository includes my term project for the Scripting Language lecture.
 
-Scripting Language Term Project – Web Design
+ONLİNE RECİPE BOOK
 
 -Project Description-
 This is the final project for my Scripting Language course. The goal was to design and develop a simple, functional, and visually structured website using web technologies such as HTML, CSS, and JavaScript. The project demonstrates my understanding of front-end development principles and basic scripting logic.
