@@ -1,5 +1,5 @@
-# ScriptingLanguage
-This repository includes my term project for the Scripting Language lecture.
+# OnlineRecipeBook
+This repository includes my Online Recipe Book project.
 
 ONLİNE RECİPE BOOK
 
